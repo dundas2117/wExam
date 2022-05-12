@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.search.ContentSearchViewController" >
+   <children>
+      <VBox  spacing="10" layoutX="181.0" layoutY="23.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+          <HBox alignment="CENTER" prefHeight="20.0" prefWidth="600.0" spacing="10"/>
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="600.0" spacing="10">
+               <children>
+                  <Label fx:id="contentLabel" />
+               </children>
+            </HBox>
+           <HBox alignment="CENTER" prefHeight="600.0" minWidth="600.0" >
+           <children>
+           <ListView fx:id="contentListView" minWidth="550.0"/>
+           </children>
+           </HBox>
+           
+         </children>
+      </VBox>
+   </children>
+</HBox>
