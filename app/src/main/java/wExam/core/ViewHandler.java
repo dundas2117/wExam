@@ -60,15 +60,15 @@ public class ViewHandler {
         stage.setTitle("Assignment -- Wenxi");
     }
 
-    public void addContentView(String tag){
+    public void addContentView(String tagId){
         try
         {
             FXMLLoader contentloader = new FXMLLoader();
             contentloader.setLocation(getClass().getResource("/contentSearch.fxml"));
             Node node = contentloader.load();
             ContentSearchViewController contentSearchController = contentloader.getController();
-            contentSearchController.init(this, vmf.getContentSearchVM());
-            this.mvController.addContentTab(tag, node);
+            contentSearchController.init(this, vmf.getContentSearchVM(tagId));
+            this.mvController.addContentTab(tagId, node);
         }catch (IOException e) {
             e.printStackTrace();
         }

@@ -22,11 +22,14 @@ import model.TagSearchResModel;
 
 public class GuardianSearch implements ISearch{
 
-    private static final String GUARDIAN_URL = "http://content.guardianapis.com/tags?web-title=%s?&api-key=%s";
+    private static final String GUARDIAN_TAG_URL = "http://content.guardianapis.com/tags?web-title=%s?&api-key=%s";
+    private static final String GUARDIAN_CONTENT_URL = "http://content.guardianapis.com/search?tag=%s?&api-key=%s";
+   
     private ExecutorService executorService = Executors.newCachedThreadPool();
     
 
     private FetchTagTask<TagSearchResultModel> fetchTags ;
+    private FetchTagTask<ContentSearchResultModel> fetchContents ;
     private String tagForSearch="";
 
     public void tagSearch(String tag,EventHandler<WorkerStateEvent> evt){
@@ -39,7 +42,7 @@ public class GuardianSearch implements ISearch{
                 TagSearchResultModel result = null;
                 try {
                     Gson gson = new Gson();
-                    String gurl = String.format(GUARDIAN_URL,this.request,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
+                    String gurl = String.format(GUARDIAN_TAG_URL,this.request,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
                     System.out.println(gurl);
                     String jsonString = readUrl(gurl);
                     System.out.println(jsonString);
@@ -56,8 +59,32 @@ public class GuardianSearch implements ISearch{
         executorService.submit(fetchTags);
     }
 
-    public void contentSearchByTag(String tag){
+    public void contentSearchByTag(String tag,EventHandler<WorkerStateEvent> evt){
+        String tagId = new String(tag);
+        System.out.println("search Cotnent for:" + tagId);
 
+
+        this.fetchContents = new FetchContentTask(tagId) {
+            @Override
+            protected ContentSearchResultModel call() throws Exception {
+                ContentSearchResultModel result = null;
+                try {
+                    Gson gson = new Gson();
+                    String gurl = String.format(GUARDIAN_CONTENT_URL,this.request,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
+                    System.out.println(gurl);
+                    String jsonString = readUrl(gurl);
+                    System.out.println(jsonString);
+                    ContentSearchResModel res  = new Gson().fromJson(jsonString, ContentSearchResModel.class);
+                    result = res.getResponse();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return result;
+            }
+        };
+
+        this.fetchContents.setOnSucceeded(evt);
+        executorService.submit(fetchContents);
     }
 
 
@@ -68,6 +95,10 @@ public class GuardianSearch implements ISearch{
 
     public TagSearchResultModel getTagSearchResult(){
         return this.fetchTags.getValue();
+    }
+
+    public ContentSearchResultModel getContentSearchResult(){
+        return this.fetchContents.getValue();
     }
 
     private static String readUrl(String urlString) throws Exception {

@@ -23,9 +23,9 @@ public class ViewModelFactory {
         return new TagSearchViewModel(search);
     }
 
-    public ContentSearchViewModel getContentSearchVM() {
+    public ContentSearchViewModel getContentSearchVM(String tagId) {
         GuardianSearch search = new GuardianSearch();
-        return new ContentSearchViewModel(search);
+        return new ContentSearchViewModel(search), tagId;
     }
   
 }

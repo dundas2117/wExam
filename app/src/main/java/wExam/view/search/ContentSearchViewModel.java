@@ -24,13 +24,14 @@ public class ContentSearchViewModel {
 
    
     private ISearch search ;
+    private String tagId;
 
     private ListProperty<String> list = new SimpleListProperty<>();
     private StringProperty title = new SimpleStringProperty();
 
-    public ContentSearchViewModel(ISearch search) {
+    public ContentSearchViewModel(ISearch search, String tagId) {
         this.search = search;
-        
+        this.tagId = tagId;
     }
 
    
@@ -40,6 +41,27 @@ public class ContentSearchViewModel {
 
     public StringProperty titleProperty() {
         return title;
+    }
+
+    public void contentSearch(){
+        //System.out.println("request" + this.request.getValue());
+        this.search.contentSearch(this.tagId,
+        new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent t) {
+                ContentSearchResultModel result = search.getContentSearchResult();
+                System.out.println(result.getTotal());
+                System.out.println(result.getResults().size());
+
+                List<String> tagList = new ArrayList<String>();
+                for (TagModel temp : result.getResults()) {
+                    tagList.add(temp.getId());
+                }
+
+                list.set(FXCollections.observableArrayList(tagList));
+            }
+        }
+        );
     }
    
 }

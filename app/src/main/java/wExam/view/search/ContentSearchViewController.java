@@ -17,7 +17,7 @@ public class ContentSearchViewController {
 
    
     private ViewHandler viewHandler;
-    private ContentSearchViewModel tagSearchVM;
+    private ContentSearchViewModel contentSearchVM;
 
     @FXML
     private ListView contentListView;
@@ -27,9 +27,13 @@ public class ContentSearchViewController {
    
     public void init(ViewHandler viewHandler, ContentSearchViewModel vm) {
         this.viewHandler = viewHandler;
-        this.tagSearchVM = vm;
+        this.contentSearchVM = vm;
 
        
+    }
+
+    public void contentSearch(){
+        this.contentSearchVM.contentSearch();
     }
 
   
