@@ -27,6 +27,8 @@ public class GuardianSearch implements ISearch{
     private static final String GUARDIAN_TAG_URL = "http://content.guardianapis.com/tags?web-title=%s&api-key=%s";
     private static final String GUARDIAN_CONTENT_URL = "https://content.guardianapis.com/search?tag=%s&api-key=%s";
    
+    private static final String ENV_API_KEY="INPUT_API_KEY";
+
     private ExecutorService executorService = Executors.newCachedThreadPool();
     
 
@@ -45,7 +47,7 @@ public class GuardianSearch implements ISearch{
                 try {
                     Gson gson = new Gson();
                     String q = URLEncoder.encode(this.request, "UTF-8");
-                    String gurl = String.format(GUARDIAN_TAG_URL,q,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
+                    String gurl = String.format(GUARDIAN_TAG_URL,q,System.getenv(ENV_API_KEY));
                     System.out.println(gurl);
                     String jsonString = readUrl(gurl);
                     System.out.println(jsonString);
@@ -72,9 +74,10 @@ public class GuardianSearch implements ISearch{
             protected ContentSearchResultModel call() throws Exception {
                 ContentSearchResultModel result = null;
                 try {
+                    String apiKey = System.getenv(ENV_API_KEY);
                     Gson gson = new Gson();
                     String q = URLEncoder.encode(this.request, "UTF-8");
-                    String gurl = String.format(GUARDIAN_CONTENT_URL,q,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
+                    String gurl = String.format(GUARDIAN_CONTENT_URL,q,apiKey);
                     System.out.println(gurl);
                     String jsonString = readUrl(gurl);
                     System.out.println(jsonString);

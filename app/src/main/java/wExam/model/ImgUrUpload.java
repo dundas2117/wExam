@@ -30,7 +30,7 @@ import com.google.gson.Gson;
 public class ImgUrUpload implements IUpload{
 
     private final static String UPLOAD_API_URL = "https://api.imgur.com/3/image";
-    private String client_id;
+    private static final String ENV_API_ID="IMGUR_API_KEY";
 
     private UploadTask<UploadResModel> uploadTask ;
     private ExecutorService executorService = Executors.newCachedThreadPool();
@@ -74,7 +74,8 @@ public class ImgUrUpload implements IUpload{
     IOException
     {
         HttpURLConnection conn;
-        String client_id = "96acd8324759607";
+        String client_id = System.getenv(ENV_API_ID);
+        System.out.print(client_id);
         conn = (HttpURLConnection) new URL(url).openConnection();
         conn.setDoInput(true);
         conn.setDoOutput(true);
