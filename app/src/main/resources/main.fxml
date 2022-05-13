@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.input.*?>
 
 <VBox prefHeight="800.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.main.MainViewController">
   <children>
@@ -25,9 +26,17 @@
           </items>
         </Menu>
         
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="true" text="_Help">
+         
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="true" text="_About" onAction="#onAbout">
+            <accelerator>
+              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator>
+            </MenuItem>
+
+           
+
           </items>
         </Menu>
       </menus>
