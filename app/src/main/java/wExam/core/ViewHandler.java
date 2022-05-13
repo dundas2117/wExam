@@ -5,6 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.application.Application;
+
 
 import view.main.MainViewController;
 import view.search.TagSearchViewController;
@@ -18,10 +20,14 @@ public class ViewHandler {
     private Stage stage;
     private ViewModelFactory vmf;
 
+
+    private Application app;
+
     private MainViewController mvController;
 
-    public ViewHandler(ViewModelFactory vmf) {
+    public ViewHandler(ViewModelFactory vmf, Application app) {
         this.vmf = vmf;
+        this.app = app;
         stage = new Stage();
     }
 
@@ -75,5 +81,8 @@ public class ViewHandler {
 
     }
 
+    public Application getApplication(){
+        return this.app;
+    }
     
 }

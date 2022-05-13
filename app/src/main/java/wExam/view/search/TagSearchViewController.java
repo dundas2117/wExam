@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyCode;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -50,6 +51,15 @@ public class TagSearchViewController {
                this.viewHandler.addContentView(tag);
                 ev.consume(); 
             }
+        });
+
+        tagListView.addEventHandler(MouseEvent.MOUSE_CLICKED, ev -> {
+           
+                String tag = (String)tagListView.getSelectionModel().getSelectedItem();
+                //System.out.println("clicked on " + tagListView.getSelectionModel().getSelectedItem());
+               this.viewHandler.addContentView(tag);
+                ev.consume(); 
+
         });
     }
 

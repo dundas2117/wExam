@@ -19,11 +19,11 @@ public class ContentModel {
         return this.id;
     }
 
-    public String getwebPublicationDate(){
+    public String getWebPublicationDate(){
         return this.webPublicationDate;
     }
 
-    public String getwebUrl(){
+    public String getWebUrl(){
         return this.webUrl;
     }
 
@@ -36,11 +36,11 @@ public class ContentModel {
         this.id = id;
     }
 
-    public void setwebUrl(String webUrl){
+    public void setWebUrl(String webUrl){
         this.webUrl = webUrl;
     }
 
-    public void setwebPublicationDate(String webPublicationDate){
+    public void setWebPublicationDate(String webPublicationDate){
         this.webPublicationDate = webPublicationDate;
     }
 }

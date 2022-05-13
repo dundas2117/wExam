@@ -2,10 +2,12 @@ package model;
 
 import core.ISearch;
 import core.FetchTagTask;
+import core.FetchContentTask;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,14 +24,14 @@ import model.TagSearchResModel;
 
 public class GuardianSearch implements ISearch{
 
-    private static final String GUARDIAN_TAG_URL = "http://content.guardianapis.com/tags?web-title=%s?&api-key=%s";
-    private static final String GUARDIAN_CONTENT_URL = "http://content.guardianapis.com/search?tag=%s?&api-key=%s";
+    private static final String GUARDIAN_TAG_URL = "http://content.guardianapis.com/tags?web-title=%s&api-key=%s";
+    private static final String GUARDIAN_CONTENT_URL = "https://content.guardianapis.com/search?tag=%s&api-key=%s";
    
     private ExecutorService executorService = Executors.newCachedThreadPool();
     
 
     private FetchTagTask<TagSearchResultModel> fetchTags ;
-    private FetchTagTask<ContentSearchResultModel> fetchContents ;
+    private FetchContentTask<ContentSearchResultModel> fetchContents ;
     private String tagForSearch="";
 
     public void tagSearch(String tag,EventHandler<WorkerStateEvent> evt){
@@ -42,7 +44,8 @@ public class GuardianSearch implements ISearch{
                 TagSearchResultModel result = null;
                 try {
                     Gson gson = new Gson();
-                    String gurl = String.format(GUARDIAN_TAG_URL,this.request,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
+                    String q = URLEncoder.encode(this.request, "UTF-8");
+                    String gurl = String.format(GUARDIAN_TAG_URL,q,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
                     System.out.println(gurl);
                     String jsonString = readUrl(gurl);
                     System.out.println(jsonString);
@@ -70,7 +73,8 @@ public class GuardianSearch implements ISearch{
                 ContentSearchResultModel result = null;
                 try {
                     Gson gson = new Gson();
-                    String gurl = String.format(GUARDIAN_CONTENT_URL,this.request,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
+                    String q = URLEncoder.encode(this.request, "UTF-8");
+                    String gurl = String.format(GUARDIAN_CONTENT_URL,q,"ab489ac0-6ff6-4dbc-96fc-eaa3b2658d50");
                     System.out.println(gurl);
                     String jsonString = readUrl(gurl);
                     System.out.println(jsonString);

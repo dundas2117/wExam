@@ -28,7 +28,7 @@ public class ContentSearchResultModel{
         return this.currentPage;
     }
 
-    public List<TagModel> getResults(){
+    public List<ContentModel> getResults(){
         return results;
     }
 

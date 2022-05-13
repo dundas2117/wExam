@@ -23,6 +23,8 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.code.gson:gson:2.9.0'
+    implementation files('../zxing/core-3.5.0.jar')
+    implementation files('../zxing/javase-3.5.0.jar')
 }
 
 javafx {
@@ -32,6 +34,7 @@ javafx {
 application {
     // Define the main class for the application.
     //RunUppercaseApp
-    mainClass = 'RunApp'
+    //mainClass = 'RunApp'
+    mainClass = 'wExam.wExamApp'
     //mainClass = 'gtest.App'
 }

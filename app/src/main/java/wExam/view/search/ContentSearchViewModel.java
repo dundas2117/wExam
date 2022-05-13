@@ -2,7 +2,9 @@ package view.search;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.File;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,26 +18,33 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import core.ISearch;
+import core.IUpload;
+;
 import model.TagModel;
 import model.TagSearchResultModel;
-
+import model.UploadResModel;
+import model.ContentModel;
+import model.ContentSearchResultModel;
 public class ContentSearchViewModel {
 
 
    
     private ISearch search ;
+    private IUpload uploader;
+
     private String tagId;
 
-    private ListProperty<String> list = new SimpleListProperty<>();
+    private ObservableList<ContentModel> list = FXCollections.observableArrayList();
     private StringProperty title = new SimpleStringProperty();
 
-    public ContentSearchViewModel(ISearch search, String tagId) {
+    public ContentSearchViewModel(ISearch search, String tagId, IUpload uploader) {
         this.search = search;
         this.tagId = tagId;
+        this.uploader = uploader;
     }
 
    
-    public ListProperty<String>  ListProperty(){
+    public ObservableList<ContentModel> listProperty(){
         return list;
     }
 
@@ -45,7 +54,7 @@ public class ContentSearchViewModel {
 
     public void contentSearch(){
         //System.out.println("request" + this.request.getValue());
-        this.search.contentSearch(this.tagId,
+        this.search.contentSearchByTag(this.tagId,
         new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent t) {
@@ -53,15 +62,50 @@ public class ContentSearchViewModel {
                 System.out.println(result.getTotal());
                 System.out.println(result.getResults().size());
 
-                List<String> tagList = new ArrayList<String>();
-                for (TagModel temp : result.getResults()) {
-                    tagList.add(temp.getId());
+                
+                for (ContentModel temp : result.getResults()) {
+                    list.add(temp);
                 }
 
-                list.set(FXCollections.observableArrayList(tagList));
+                
             }
         }
         );
+    }
+
+    public String getTagId(){
+        return this.tagId;
+    }
+
+    public void UploadShortRpt(File file){
+        this.uploader.uploadImg(file,
+        new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent t) {
+              boolean flag = true;
+              System.out.print("upload completed");
+              UploadResModel result = uploader.getUploadResult();
+              if ( result != null ){
+                if (result.getSuccess() == "true"){
+                    showMsg("Short report uploaded to " + result.getData().getLink());
+                }
+              }
+              else {
+                showMsg("Failed to uplaod short report.");
+
+              }
+            }
+        });
+    }
+
+    public void showMsg(String msg){
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Message");
+        alert.setHeaderText("");
+        alert.setContentText(msg);
+        alert.showAndWait().ifPresent(rs -> {
+           
+        });
     }
    
 }
