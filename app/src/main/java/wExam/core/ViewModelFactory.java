@@ -33,7 +33,7 @@ public class ViewModelFactory {
             search = new DummySearch();
         }
         else{
-             search = new GuardianSearch();
+             search = new GuardianSearch(this.app.getExecutorService());
         }
        
         return new TagSearchViewModel(search);
@@ -46,7 +46,7 @@ public class ViewModelFactory {
             search = new DummySearch();
         }
         else{
-             search = new GuardianSearch();
+             search = new GuardianSearch(this.app.getExecutorService());
              search.enableCache(usingCache);
         }
 
@@ -55,7 +55,7 @@ public class ViewModelFactory {
             uploader = new DummyUpload();
         }
         else{
-            uploader = new ImgUrUpload();
+            uploader = new ImgUrUpload(this.app.getExecutorService());
         }
 
         

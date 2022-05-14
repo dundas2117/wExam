@@ -33,8 +33,11 @@ public class ImgUrUpload implements IUpload{
     private static final String ENV_API_ID="IMGUR_API_KEY";
 
     private UploadTask<UploadResModel> uploadTask ;
-    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private ExecutorService executorService ;
 
+    public ImgUrUpload(ExecutorService executorService){
+        this.executorService = executorService;
+    }
     public void uploadImg(File file,EventHandler<WorkerStateEvent> evt){
   
   

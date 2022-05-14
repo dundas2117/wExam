@@ -15,12 +15,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import model.CacheRepo;
 
 
 public class wExamApp extends Application {
     private boolean isSearchDummy = false;
     private boolean isUploadDummy = false;
+    //need to use this to run on thread other than UI
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+    
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,6 +55,7 @@ public class wExamApp extends Application {
         // remove cache db
         File cacheDB = new File("cache.db"); 
         cacheDB.delete();
+        this.executorService.shutdown();
     }
 
     public boolean getIsSearchDummy(){
@@ -57,6 +64,10 @@ public class wExamApp extends Application {
 
     public boolean getIsUploadDummy(){
         return this.isUploadDummy;
+    }
+
+    public ExecutorService getExecutorService(){
+        return this.executorService;
     }
 
    

@@ -38,7 +38,7 @@ public class GuardianSearch implements ISearch{
     private static final String ENV_API_KEY="INPUT_API_KEY";
 
     //need to use this to run on thread other than UI
-    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private ExecutorService executorService ;
     
 
     private FetchTagTask<TagSearchResultModel> fetchTags ;
@@ -46,6 +46,10 @@ public class GuardianSearch implements ISearch{
     private String tagForSearch="";
 
     private boolean usingCache;
+
+    public GuardianSearch(ExecutorService executorService ){
+        this.executorService = executorService;
+    }
 
     public void tagSearch(String tag,EventHandler<WorkerStateEvent> evt){
         System.out.println("search:" + tag);
