@@ -4,11 +4,30 @@
 package wExam;
 
 import org.junit.Test;
+
+import model.ContentModel;
+import model.TagModel;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
-    @Test public void appHasAGreeting() {
-        wExamApp classUnderTest = new wExamApp();
-        //assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+
+    @Test public void tagModelTest() {
+       TagModel tm = new TagModel();
+       tm.setId("id");
+       tm.setWebTitle("title"); 
+       assertEquals(tm.getId(),"id");
+       assertEquals(tm.getWebTitle(),"title");
+       
     }
+
+    @Test public void contentModelTest() {
+        ContentModel cm = new ContentModel();
+        cm.setWebTitle("webtitle");
+       
+        cm.setWebUrl("weburl"); 
+        assertEquals(cm.getWebTitle(),"webtitle");
+        assertEquals(cm.getWebUrl(),"weburl");
+        
+     }
 }
