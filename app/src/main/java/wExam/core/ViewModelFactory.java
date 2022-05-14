@@ -39,7 +39,7 @@ public class ViewModelFactory {
         return new TagSearchViewModel(search);
     }
 
-    public ContentSearchViewModel getContentSearchVM(String tagId) {
+    public ContentSearchViewModel getContentSearchVM(String tagId, boolean usingCache) {
 
         ISearch search = null;
         if ( app.getIsSearchDummy()){
@@ -47,6 +47,7 @@ public class ViewModelFactory {
         }
         else{
              search = new GuardianSearch();
+             search.enableCache(usingCache);
         }
 
         IUpload uploader = null;

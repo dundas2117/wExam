@@ -5,9 +5,10 @@ import java.util.List;
 
 
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 
@@ -28,6 +29,7 @@ public class TagSearchViewModel {
 
     private ListProperty<String> list = new SimpleListProperty<>();
     private StringProperty request = new SimpleStringProperty();
+    private BooleanProperty enableCache = new SimpleBooleanProperty(true);
 
     public TagSearchViewModel(ISearch search) {
         this.search = search;
@@ -36,6 +38,7 @@ public class TagSearchViewModel {
 
     public void tagSearch(){
         //System.out.println("request" + this.request.getValue());
+        this.search.enableCache(this.enableCache.getValue());
         this.search.tagSearch(this.request.getValue(),
         new EventHandler<WorkerStateEvent>() {
             @Override
@@ -50,6 +53,7 @@ public class TagSearchViewModel {
                 }
 
                 list.set(FXCollections.observableArrayList(tagList));
+                
             }
         }
         );
@@ -61,6 +65,10 @@ public class TagSearchViewModel {
 
     public StringProperty requestProperty() {
         return request;
+    }
+
+    public BooleanProperty enableCacheProperty(){
+        return this.enableCache;
     }
    
 }

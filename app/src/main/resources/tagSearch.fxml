@@ -27,9 +27,13 @@
            </HBox>
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" text="More..." />
+                  <Button mnemonicParsing="false" text="More..." visible="false"/>
                </children>
             </HBox>
+            <CheckBox alignment="CENTER" fx:id="cacheCB" mnemonicParsing="false" selected="true" text="Enable Cache" />
+            <Button alignment="CENTER" mnemonicParsing="false" text="Clear cache" onAction="#onClearCache"/>
+        
+
          </children>
       </VBox>
    </children>

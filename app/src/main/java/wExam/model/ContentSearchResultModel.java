@@ -8,6 +8,8 @@ public class ContentSearchResultModel{
     private int pages;
     private int currentPage ;
 
+    private boolean fromCache;
+
     private List<ContentModel> results;
 
     public ContentSearchResultModel(){
@@ -30,6 +32,14 @@ public class ContentSearchResultModel{
 
     public List<ContentModel> getResults(){
         return results;
+    }
+
+    public boolean getFromCache(){
+        return this.fromCache;
+    }
+
+    public void setFromCache(boolean f){
+        this.fromCache = f;
     }
 
     public void setTotal(int total){

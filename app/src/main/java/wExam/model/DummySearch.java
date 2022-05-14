@@ -72,7 +72,7 @@ public class DummySearch implements ISearch{
         System.out.println("dummy search Cotnent for:" + tagId);
 
 
-        this.fetchContents = new FetchContentTask(tagId) {
+        this.fetchContents = new FetchContentTask(tagId,false) {
             @Override
             protected ContentSearchResultModel call() throws Exception {
                 ContentSearchResultModel result = new ContentSearchResultModel();
@@ -110,6 +110,11 @@ public class DummySearch implements ISearch{
 
     public ContentSearchResultModel getContentSearchResult(){
         return this.fetchContents.getValue();
+    }
+
+    //no need to use cache for dummy
+    public void enableCache(boolean flag){
+
     }
 
   

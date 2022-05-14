@@ -8,9 +8,16 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 import javafx.concurrent.Task;
@@ -21,6 +28,7 @@ import com.google.gson.Gson;
 
 import model.TagSearchResultModel;
 import model.TagSearchResModel;
+import model.CacheRepo;
 
 public class GuardianSearch implements ISearch{
 
@@ -29,12 +37,15 @@ public class GuardianSearch implements ISearch{
    
     private static final String ENV_API_KEY="INPUT_API_KEY";
 
+    //need to use this to run on thread other than UI
     private ExecutorService executorService = Executors.newCachedThreadPool();
     
 
     private FetchTagTask<TagSearchResultModel> fetchTags ;
     private FetchContentTask<ContentSearchResultModel> fetchContents ;
     private String tagForSearch="";
+
+    private boolean usingCache;
 
     public void tagSearch(String tag,EventHandler<WorkerStateEvent> evt){
         System.out.println("search:" + tag);
@@ -45,6 +56,11 @@ public class GuardianSearch implements ISearch{
             protected TagSearchResultModel call() throws Exception {
                 TagSearchResultModel result = null;
                 try {
+
+                    //try cache first
+                    //just find we don't need to cache tags
+                    //result = getTagsFromCache(this.request)   ;
+                    
                     Gson gson = new Gson();
                     String q = URLEncoder.encode(this.request, "UTF-8");
                     String gurl = String.format(GUARDIAN_TAG_URL,q,System.getenv(ENV_API_KEY));
@@ -53,6 +69,10 @@ public class GuardianSearch implements ISearch{
                     System.out.println(jsonString);
                     TagSearchResModel res  = new Gson().fromJson(jsonString, TagSearchResModel.class);
                     result = res.getResponse();
+                    result.setFromCache(false);
+                    
+                    //saveTagsToCache(this.request, result.getResults());
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -66,23 +86,35 @@ public class GuardianSearch implements ISearch{
 
     public void contentSearchByTag(String tag,EventHandler<WorkerStateEvent> evt){
         String tagId = new String(tag);
-        System.out.println("search Cotnent for:" + tagId);
+        System.out.println("search Cotnent for:" + tagId + " " + this.usingCache);
 
 
-        this.fetchContents = new FetchContentTask(tagId) {
+        this.fetchContents = new FetchContentTask(tagId, this.usingCache) {
             @Override
             protected ContentSearchResultModel call() throws Exception {
-                ContentSearchResultModel result = null;
+                ContentSearchResultModel result = new ContentSearchResultModel();
                 try {
-                    String apiKey = System.getenv(ENV_API_KEY);
-                    Gson gson = new Gson();
-                    String q = URLEncoder.encode(this.request, "UTF-8");
-                    String gurl = String.format(GUARDIAN_CONTENT_URL,q,apiKey);
-                    System.out.println(gurl);
-                    String jsonString = readUrl(gurl);
-                    System.out.println(jsonString);
-                    ContentSearchResModel res  = new Gson().fromJson(jsonString, ContentSearchResModel.class);
-                    result = res.getResponse();
+                    System.out.print(this.usingCache);
+                    if ( this.usingCache ){
+                        result = CacheRepo.getContentsFromCache(this.request);
+                    }
+
+                    if ( result.getTotal() == 0){
+                        String apiKey = System.getenv(ENV_API_KEY);
+                        Gson gson = new Gson();
+                        String q = URLEncoder.encode(this.request, "UTF-8");
+                        String gurl = String.format(GUARDIAN_CONTENT_URL,q,apiKey);
+                        System.out.println(gurl);
+                        String jsonString = readUrl(gurl);
+                        System.out.println(jsonString);
+                        ContentSearchResModel res  = new Gson().fromJson(jsonString, ContentSearchResModel.class);
+                        result = res.getResponse();
+                        result.setFromCache(false);
+                        CacheRepo.saveContentsToCache(this.request,result.getResults());
+                    }
+                    else{
+                        result.setFromCache(true);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -95,7 +127,10 @@ public class GuardianSearch implements ISearch{
     }
 
 
-
+    public void enableCache(boolean flag){
+        
+        this.usingCache = flag;
+    }
    
 
 
@@ -125,4 +160,8 @@ public class GuardianSearch implements ISearch{
                 reader.close();
         }
     }
+
+   
+
+
 }

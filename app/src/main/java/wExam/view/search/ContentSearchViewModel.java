@@ -8,7 +8,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 
@@ -36,6 +37,9 @@ public class ContentSearchViewModel {
 
     private ObservableList<ContentModel> list = FXCollections.observableArrayList();
     private StringProperty title = new SimpleStringProperty();
+    private BooleanProperty cacheHit = new SimpleBooleanProperty(false);
+
+
 
     public ContentSearchViewModel(ISearch search, String tagId, IUpload uploader) {
         this.search = search;
@@ -52,6 +56,13 @@ public class ContentSearchViewModel {
         return title;
     }
 
+    public BooleanProperty cacheHiProperty(){
+        return this.cacheHit;
+    }
+
+   
+    
+
     public void contentSearch(){
         //System.out.println("request" + this.request.getValue());
         this.search.contentSearchByTag(this.tagId,
@@ -66,6 +77,8 @@ public class ContentSearchViewModel {
                 for (ContentModel temp : result.getResults()) {
                     list.add(temp);
                 }
+
+                cacheHit.setValue(result.getFromCache());
 
                 
             }

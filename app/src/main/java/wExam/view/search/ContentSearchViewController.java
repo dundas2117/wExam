@@ -63,6 +63,8 @@ public class ContentSearchViewController {
     @FXML
     private TableColumn<ContentModel, String> urlCol;
     
+    @FXML
+    private Label cacheHitLabel;
    
     public void init(ViewHandler viewHandler, ContentSearchViewModel vm) {
         this.viewHandler = viewHandler;
@@ -72,7 +74,8 @@ public class ContentSearchViewController {
         dateCol.setCellValueFactory(new PropertyValueFactory<>("webPublicationDate"));
         urlCol.setCellValueFactory(new PropertyValueFactory<>("webUrl"));
         contentTable.setItems(this.contentSearchVM.listProperty());
-        
+        cacheHitLabel.visibleProperty().bind(this.contentSearchVM.cacheHiProperty());
+
 
         contentTable.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {

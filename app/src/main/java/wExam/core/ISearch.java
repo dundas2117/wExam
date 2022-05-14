@@ -14,4 +14,6 @@ public interface ISearch{
 
     public TagSearchResultModel getTagSearchResult();
     public ContentSearchResultModel getContentSearchResult();
+
+    public void enableCache(boolean flag);
 }

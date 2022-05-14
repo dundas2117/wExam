@@ -10,6 +10,8 @@ public class TagSearchResultModel{
 
     private List<TagModel> results;
 
+    private boolean fromCache;
+
     public TagSearchResultModel(){
 
     }
@@ -41,6 +43,14 @@ public class TagSearchResultModel{
 
     public List<TagModel> getResults(){
         return results;
+    }
+
+    public boolean getFromCache(){
+        return this.fromCache;
+    }
+
+    public void setFromCache(boolean f){
+        this.fromCache = f;
     }
 
     public void setTotal(int total){

@@ -25,6 +25,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation files('../zxing/core-3.5.0.jar')
     implementation files('../zxing/javase-3.5.0.jar')
+    implementation files('../jdbc/sqlite-jdbc-3.36.0.3.jar')
 }
 
 javafx {

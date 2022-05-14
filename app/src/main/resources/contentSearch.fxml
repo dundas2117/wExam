@@ -33,7 +33,9 @@
            </HBox>
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" text="More..." />
+                  <Label  fx:id="cacheHitLabel" text="Cache hit. You can disable or clear cache from menu Settings->Cache"/>
+
+                  <Button mnemonicParsing="false" text="More..." visible="false"/>
                </children>
             </HBox>         
          </children>

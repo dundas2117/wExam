@@ -98,14 +98,14 @@ public class ViewHandler {
         splashStage.show();
     }
 
-    public void addContentView(String tagId){
+    public void addContentView(String tagId, boolean usingCache){
         try
         {
             FXMLLoader contentloader = new FXMLLoader();
             contentloader.setLocation(getClass().getResource("/contentSearch.fxml"));
             Node node = contentloader.load();
             ContentSearchViewController contentSearchController = contentloader.getController();
-            contentSearchController.init(this, vmf.getContentSearchVM(tagId));
+            contentSearchController.init(this, vmf.getContentSearchVM(tagId, usingCache));
             this.mvController.addContentTab(tagId, node);
         }catch (IOException e) {
             e.printStackTrace();

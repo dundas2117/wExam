@@ -12,7 +12,7 @@
       <VBox spacing="20" alignment="CENTER" layoutX="175.0" layoutY="8.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fx:id="imageView"  fitHeight="223.0" fitWidth="402.0" pickOnBounds="true" preserveRatio="true" />
-            <Label text="https://www.technojobs.co.uk/"/>
+            <Label text="(Image source: https://www.technojobs.co.uk/)"/>
            
             <ProgressBar fx:id="pBar" prefWidth="200.0" progress="0.0" />
          </children>
