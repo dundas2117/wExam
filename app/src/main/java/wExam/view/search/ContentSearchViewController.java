@@ -28,6 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.application.HostServices;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ProgressIndicator;
 
 import javafx.fxml.FXML;
 
@@ -65,6 +66,9 @@ public class ContentSearchViewController {
     
     @FXML
     private Label cacheHitLabel;
+
+    @FXML
+    private ProgressIndicator loadingInd;
    
     public void init(ViewHandler viewHandler, ContentSearchViewModel vm) {
         this.viewHandler = viewHandler;
@@ -75,6 +79,7 @@ public class ContentSearchViewController {
         urlCol.setCellValueFactory(new PropertyValueFactory<>("webUrl"));
         contentTable.setItems(this.contentSearchVM.listProperty());
         cacheHitLabel.visibleProperty().bind(this.contentSearchVM.cacheHiProperty());
+        loadingInd.visibleProperty().bindBidirectional(contentSearchVM.isLoadingProperty());
 
 
         contentTable.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {

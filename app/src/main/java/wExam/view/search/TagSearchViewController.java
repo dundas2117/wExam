@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.event.EventHandler;
@@ -34,6 +35,8 @@ public class TagSearchViewController {
     @FXML
     private CheckBox cacheCB;
 
+    @FXML
+    private ProgressIndicator loadingInd;
     
     
    
@@ -44,7 +47,7 @@ public class TagSearchViewController {
         tagListView.itemsProperty().bind(this.tagSearchVM.ListProperty());
         tagForSearch.textProperty().bindBidirectional(tagSearchVM.requestProperty());
         cacheCB.selectedProperty().bindBidirectional(tagSearchVM.enableCacheProperty());
-
+        loadingInd.visibleProperty().bindBidirectional(tagSearchVM.isLoadingProperty());
 
         searchBtn.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {

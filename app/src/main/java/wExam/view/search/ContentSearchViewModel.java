@@ -38,7 +38,8 @@ public class ContentSearchViewModel {
     private ObservableList<ContentModel> list = FXCollections.observableArrayList();
     private StringProperty title = new SimpleStringProperty();
     private BooleanProperty cacheHit = new SimpleBooleanProperty(false);
-
+    private BooleanProperty isLoading = new SimpleBooleanProperty(false);
+    
 
 
     public ContentSearchViewModel(ISearch search, String tagId, IUpload uploader) {
@@ -59,12 +60,15 @@ public class ContentSearchViewModel {
     public BooleanProperty cacheHiProperty(){
         return this.cacheHit;
     }
-
+    public BooleanProperty isLoadingProperty(){
+        return this.isLoading;
+    }
    
     
 
     public void contentSearch(){
         //System.out.println("request" + this.request.getValue());
+        this.isLoading.setValue(true);
         this.search.contentSearchByTag(this.tagId,
         new EventHandler<WorkerStateEvent>() {
             @Override
@@ -79,7 +83,7 @@ public class ContentSearchViewModel {
                 }
 
                 cacheHit.setValue(result.getFromCache());
-
+                isLoading.setValue(false);
                 
             }
         }

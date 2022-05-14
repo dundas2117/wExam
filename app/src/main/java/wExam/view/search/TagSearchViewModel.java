@@ -30,6 +30,8 @@ public class TagSearchViewModel {
     private ListProperty<String> list = new SimpleListProperty<>();
     private StringProperty request = new SimpleStringProperty();
     private BooleanProperty enableCache = new SimpleBooleanProperty(true);
+    private BooleanProperty isLoading = new SimpleBooleanProperty(false);
+    
 
     public TagSearchViewModel(ISearch search) {
         this.search = search;
@@ -37,6 +39,7 @@ public class TagSearchViewModel {
     }
 
     public void tagSearch(){
+        this.isLoading.setValue(true);
         //System.out.println("request" + this.request.getValue());
         this.search.enableCache(this.enableCache.getValue());
         this.search.tagSearch(this.request.getValue(),
@@ -53,6 +56,7 @@ public class TagSearchViewModel {
                 }
 
                 list.set(FXCollections.observableArrayList(tagList));
+                isLoading.setValue(false);
                 
             }
         }
@@ -71,4 +75,7 @@ public class TagSearchViewModel {
         return this.enableCache;
     }
    
+    public BooleanProperty isLoadingProperty(){
+        return this.isLoading;
+    }
 }

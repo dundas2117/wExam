@@ -22,7 +22,10 @@
             </HBox>
            <HBox alignment="CENTER" prefHeight="600.0" minWidth="600.0" >
            <children>
+           <StackPane>
            <ListView fx:id="tagListView" minWidth="550.0"/>
+           <ProgressIndicator fx:id="loadingInd" />
+           </StackPane>
            </children>
            </HBox>
             <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0">
