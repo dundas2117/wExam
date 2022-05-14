@@ -9,7 +9,7 @@ import model.DummySearch;
 import model.DummyUpload;
 import model.GuardianSearch;
 import model.ImgUrUpload;
-
+import model.AI;
 
 import javafx.application.Application;
 
@@ -36,7 +36,7 @@ public class ViewModelFactory {
              search = new GuardianSearch(this.app.getExecutorService());
         }
        
-        return new TagSearchViewModel(search);
+        return new TagSearchViewModel(search ,new AI(this.app.getExecutorService()));
     }
 
     public ContentSearchViewModel getContentSearchVM(String tagId, boolean usingCache) {

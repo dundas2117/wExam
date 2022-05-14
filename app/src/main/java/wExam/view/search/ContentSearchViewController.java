@@ -84,10 +84,14 @@ public class ContentSearchViewController {
 
         contentTable.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
+
+               
                 ContentModel item = (ContentModel)contentTable.getSelectionModel().getSelectedItem();
-                
-                System.out.println("clicked on " + item.getWebUrl());
-                this.viewHandler.getApplication().getHostServices().showDocument(item.getWebUrl());
+                if ( item != null){
+              
+                    //System.out.println("clicked on " + item.getWebUrl());
+                    this.viewHandler.getApplication().getHostServices().showDocument(item.getWebUrl());
+                }    
                 ev.consume(); 
             }
         });
@@ -95,11 +99,12 @@ public class ContentSearchViewController {
         contentTable.addEventHandler(MouseEvent.MOUSE_CLICKED, ev -> {
            
             ContentModel item = (ContentModel)contentTable.getSelectionModel().getSelectedItem();
-                
-            System.out.println("clicked on " + item.getWebUrl());
-            this.viewHandler.getApplication().getHostServices().showDocument(item.getWebUrl());
+            if ( item != null){
+          
+                //System.out.println("clicked on " + item.getWebUrl());
+                this.viewHandler.getApplication().getHostServices().showDocument(item.getWebUrl());
+            }    
             ev.consume(); 
-
         });
 
         this.contentSearchVM.contentSearch();

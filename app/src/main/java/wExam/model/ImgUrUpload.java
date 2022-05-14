@@ -2,6 +2,7 @@ package model;
 
 import core.IUpload;
 import core.UploadTask;
+import core.Util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -121,33 +122,7 @@ public class ImgUrUpload implements IUpload{
 
     private static String getResponse(HttpURLConnection conn)
     {
-        StringBuilder str = new StringBuilder();
-        BufferedReader reader;
-        try
-        {
-            System.out.print(conn.getResponseCode());
-            /*
-            if (conn.getResponseCode() != StatusCode.SUCCESS.getHttpCode())
-            {
-                throw new WebException(conn.getResponseCode());
-            }*/
-            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                str.append(line);
-            }
-            reader.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();;
-        }
-        if (str.toString().equals(""))
-        {
-            System.out.print("unknown error");
-        }
-        return str.toString();
+       return Util.getResponse(conn);
     }
     
   

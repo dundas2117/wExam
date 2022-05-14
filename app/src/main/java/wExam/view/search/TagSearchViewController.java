@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import model.AI;
 import model.CacheRepo;
 import javafx.scene.input.KeyCode;
 import javafx.beans.property.ListProperty;
@@ -37,6 +38,9 @@ public class TagSearchViewController {
 
     @FXML
     private ProgressIndicator loadingInd;
+
+    @FXML
+    private TextField aiInput;
     
     
    
@@ -44,10 +48,14 @@ public class TagSearchViewController {
         this.viewHandler = viewHandler;
         this.tagSearchVM = vm;
 
+        this.tagSearchVM.setViewHandler(viewHandler);
+
         tagListView.itemsProperty().bind(this.tagSearchVM.ListProperty());
         tagForSearch.textProperty().bindBidirectional(tagSearchVM.requestProperty());
         cacheCB.selectedProperty().bindBidirectional(tagSearchVM.enableCacheProperty());
         loadingInd.visibleProperty().bindBidirectional(tagSearchVM.isLoadingProperty());
+
+        aiInput.textProperty().bindBidirectional(tagSearchVM.aiInputProperty());
 
         searchBtn.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
@@ -58,27 +66,43 @@ public class TagSearchViewController {
 
         tagListView.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
-
+                
                 String tag = (String)tagListView.getSelectionModel().getSelectedItem();
+                if ( tag != null){
+                //System.out.println(tag);
                 //System.out.println("clicked on " + tagListView.getSelectionModel().getSelectedItem());
-               this.viewHandler.addContentView(tag,this.cacheCB.selectedProperty().getValue());
+                    this.viewHandler.addContentView(tag,this.cacheCB.selectedProperty().getValue());
+                }
+            
                 ev.consume(); 
             }
         });
 
         tagListView.addEventHandler(MouseEvent.MOUSE_CLICKED, ev -> {
            
+            if ( tagListView.getSelectionModel() != null ){
+
                 String tag = (String)tagListView.getSelectionModel().getSelectedItem();
-                //System.out.println("clicked on " + tagListView.getSelectionModel().getSelectedItem());
-               this.viewHandler.addContentView(tag,this.cacheCB.selectedProperty().getValue());
-                ev.consume(); 
+                if ( tag != null){
+                    //System.out.println(tag);
+                    //System.out.println("clicked on " + tagListView.getSelectionModel().getSelectedItem());
+                    this.viewHandler.addContentView(tag,this.cacheCB.selectedProperty().getValue());
+                }            }
+             ev.consume(); 
 
         });
+        aiInput.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+            if (ev.getCode() == KeyCode.ENTER) {
+                this.tagSearchVM.callAI();
+                ev.consume(); 
+            }
+        });
+
     }
 
    
     public void onTagSearchButton(){
-        this.tagSearchVM.tagSearch();
+        this.tagSearchVM.tagSearch(tagForSearch.getText());
     }
 
     public void onClearCache(){

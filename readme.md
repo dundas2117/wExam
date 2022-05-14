@@ -5,4 +5,8 @@ Following features have been implemented,
 2.About feature (Credit)
 3.Concurrency ( responsive UI throughout network calls)
 4.MVVM
+5.Cache
+6.Loading indicator
+
+
 
