@@ -11,6 +11,7 @@ import javafx.application.Application;
 
 import view.main.MainViewController;
 import view.main.SplashController;
+import view.mylist.MyListViewController;
 import view.search.TagSearchViewController;
 import view.search.ContentSearchViewController;
 import java.io.IOException;
@@ -61,6 +62,17 @@ public class ViewHandler {
             tagSearchController.init(this, vmf.getTagSearchVM());
     
             this.mvController.loadSearchTab(node);
+
+            FXMLLoader myListloader = new FXMLLoader();
+            myListloader.setLocation(getClass().getResource("/mylist.fxml"));
+            Node myListNode = myListloader.load();
+            MyListViewController myListController = myListloader.getController();
+            myListController.init(this, vmf.getMyListVM());
+
+            
+    
+            this.mvController.loadMyListTab(myListNode);
+
 
             mainScene = new Scene(root);
 
@@ -119,6 +131,10 @@ public class ViewHandler {
 
     public Scene getMainScene(){
         return this.mainScene;
+    }
+
+    public MainViewController getMVController(){
+        return this.mvController;
     }
 
 

@@ -20,7 +20,7 @@ import javafx.collections.ObservableList;
 
 import core.ISearch;
 import core.IUpload;
-;
+
 import model.TagModel;
 import model.TagSearchResultModel;
 import model.UploadResModel;

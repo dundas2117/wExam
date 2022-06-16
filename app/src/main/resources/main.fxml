@@ -34,6 +34,7 @@
             <TabPane fx:id="mainTabPane" layoutX="220.0" layoutY="86.0" prefHeight="372.5" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
                 <Tab text="Search" fx:id="tagSearchTab" />
+                <Tab text="MyList" fx:id="myListTab" />
               </tabs>
             </TabPane>
          </children>

@@ -17,6 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+
+import javafx.scene.control.TableCell;
 import javafx.scene.control.Button;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +33,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ProgressIndicator;
 
 import javafx.fxml.FXML;
+import javafx.util.Callback;
+import javafx.scene.control.Tooltip;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -53,6 +57,9 @@ public class ContentSearchViewController {
     @FXML
     private TableView<ContentModel> contentTable;
 
+
+    @FXML
+    private TableColumn<ContentModel, Void> addBtnCol;
 
     @FXML
     private TableColumn<ContentModel, String> titleCol;
@@ -107,6 +114,7 @@ public class ContentSearchViewController {
             ev.consume(); 
         });
 
+        addButtonToTable();
         this.contentSearchVM.contentSearch();
 
 
@@ -203,7 +211,45 @@ public class ContentSearchViewController {
         }
     }
 
+    private void addButtonToTable() {
+        
+        Callback<TableColumn<ContentModel, Void>, TableCell<ContentModel, Void>> cellFactory = new Callback<TableColumn<ContentModel, Void>, TableCell<ContentModel, Void>>() {
+            @Override
+            public TableCell<ContentModel, Void> call(final TableColumn<ContentModel, Void> param) {
+                final TableCell<ContentModel, Void> cell = new TableCell<ContentModel, Void>() {
 
+                    private final Button btn = new Button("+");
+                    
+
+                    {
+                        btn.setTooltip(new Tooltip("Add to My List"));
+                        btn.setOnAction((ActionEvent event) -> {
+                            ContentModel data = getTableView().getItems().get(getIndex());
+
+                            viewHandler.getMVController().getMainVM().addToMyList(data);
+                            //System.out.println("selectedData: " + data);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        addBtnCol.setCellFactory(cellFactory);
+    }
+
+   
+   
   
     //get the conneciton
    

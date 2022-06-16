@@ -2,6 +2,7 @@ package core;
 
 
 import view.main.MainViewModel;
+import view.mylist.MyListViewModel;
 import view.search.TagSearchViewModel;
 import wExam.wExamApp;
 import view.search.ContentSearchViewModel;
@@ -26,6 +27,9 @@ public class ViewModelFactory {
         return new MainViewModel();
     }
 
+    public MyListViewModel getMyListVM(){
+        return new MyListViewModel();
+    }
     public TagSearchViewModel getTagSearchVM() {
 
         ISearch search = null;

@@ -33,6 +33,9 @@ public class MainViewController {
     private Tab tagSearchTab;
 
     @FXML
+    private Tab myListTab;
+
+    @FXML
     private TabPane mainTabPane;
    
     private ViewHandler viewHandler;
@@ -49,11 +52,17 @@ public class MainViewController {
         tagSearchTab.setContent(node);
     }
 
+    public void loadMyListTab(Node node){
+        myListTab.setContent(node);
+    }
+
     public void addContentTab(String tag, Node node){
         Tab tab = new Tab("Tag - " + tag);
         tab.setContent(node);
         mainTabPane.getTabs().add(tab);
     }
+
+    
 
     public void onAbout(){
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -62,6 +71,10 @@ public class MainViewController {
         alert.setContentText("This application is an implementaion of MVVM. It used JAVAFX, ZXING and GSON.");
         alert.showAndWait().ifPresent(rs -> {
         });
+    }
+
+    public MainViewModel getMainVM(){
+        return this.mainVM;
     }
 
     

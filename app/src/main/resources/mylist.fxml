@@ -8,16 +8,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.search.ContentSearchViewController" >
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.mylist.MyListViewController" >
    <children>
       <VBox  spacing="10" layoutX="181.0" layoutY="23.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
           <HBox alignment="CENTER" prefHeight="20.0" prefWidth="600.0" spacing="10"/>
             <HBox alignment="CENTER" prefHeight="48.0" prefWidth="600.0" spacing="20">
                <children>
-                  <Label fx:id="contentLabel" />
-                   <Button mnemonicParsing="true" text="_Long form Report" onAction="#onLongReporthButton"/>
-                   <Button mnemonicParsing="false" text="Short form Report" onAction="#onShortReporthButton"/>
+                  <Label fx:id="contentLabel" text="My List"/>
+                  
                </children>
             </HBox>
            <HBox alignment="CENTER" prefHeight="600.0" minWidth="640.0" >
@@ -25,23 +24,16 @@
            <StackPane>
             <TableView prefHeight="600.0" prefWidth="600.0" fx:id="contentTable">
               <columns>
-                <TableColumn fx:id="addBtnCol" prefWidth="40.0"  />
+                <TableColumn fx:id="colRmBtn" prefWidth="40" text="" />
                 <TableColumn fx:id="titleCol" prefWidth="484.0" text="Web Title" />
-                <TableColumn fx:id="dateCol" minWidth="0.0" prefWidth="104.0" text="Date" />
                 <TableColumn fx:id="urlCol" minWidth="0.0" prefWidth="0.0" text="" />
               </columns>
             </TableView>
-            <ProgressIndicator fx:id="loadingInd" />
+          
             </StackPane>
            </children>
            </HBox>
-            <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0">
-               <children>
-                  <Label  fx:id="cacheHitLabel" text="Cache hit. You can disable or clear cache from menu Settings->Cache"/>
-
-                  <Button mnemonicParsing="false" text="More..." visible="false"/>
-               </children>
-            </HBox>         
+           
          </children>
       </VBox>
    </children>
