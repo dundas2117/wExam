@@ -8,6 +8,7 @@ Following features have been implemented,
 5.Cache
 6.Loading indicator
 7.wit-ai
+This is a test!!!
 
 
 
